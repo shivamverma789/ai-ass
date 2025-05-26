@@ -120,15 +120,7 @@
             margin-top: 0.5rem;
         }
 
-        .header-controls {
-            display: flex;
-            gap: 0.5rem;
-            justify-content: center;
-            margin-top: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .reset-button, .memory-button {
+        .reset-button {
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(236, 72, 153, 0.3);
             color: rgba(252, 231, 243, 0.8);
@@ -136,10 +128,11 @@
             border-radius: 1rem;
             cursor: pointer;
             font-size: 0.75rem;
+            margin-top: 0.5rem;
             transition: all 0.3s ease;
         }
 
-        .reset-button:hover, .memory-button:hover {
+        .reset-button:hover {
             background: rgba(236, 72, 153, 0.2);
             border-color: #f472b6;
             color: white;
@@ -155,89 +148,6 @@
             border: 1px solid rgba(236, 72, 153, 0.3);
             border-radius: 1rem;
             padding: 2rem;
-        }
-
-        /* Avatar section */
-        .avatar-section {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .avatar-container {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 1rem;
-        }
-
-        .avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #f472b6, #c084fc);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .avatar.speaking {
-            animation: avatarPulse 1s ease-in-out infinite;
-        }
-
-        .avatar.happy { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
-        .avatar.sad { background: linear-gradient(135deg, #60a5fa, #3b82f6); }
-        .avatar.angry { background: linear-gradient(135deg, #f87171, #ef4444); }
-        .avatar.playful { background: linear-gradient(135deg, #a78bfa, #8b5cf6); }
-
-        @keyframes avatarPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .avatar-status {
-            font-size: 0.875rem;
-            color: rgba(252, 231, 243, 0.8);
-            margin-top: 0.5rem;
-        }
-
-        /* Voice visualizer */
-        .voice-visualizer {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2px;
-            height: 30px;
-            margin: 1rem 0;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .voice-visualizer.active {
-            opacity: 1;
-        }
-
-        .voice-bar {
-            width: 3px;
-            background: linear-gradient(to top, #f472b6, #c084fc);
-            border-radius: 2px;
-            animation: voiceWave 0.5s ease-in-out infinite alternate;
-        }
-
-        .voice-bar:nth-child(1) { animation-delay: 0s; }
-        .voice-bar:nth-child(2) { animation-delay: 0.1s; }
-        .voice-bar:nth-child(3) { animation-delay: 0.2s; }
-        .voice-bar:nth-child(4) { animation-delay: 0.3s; }
-        .voice-bar:nth-child(5) { animation-delay: 0.4s; }
-        .voice-bar:nth-child(6) { animation-delay: 0.3s; }
-        .voice-bar:nth-child(7) { animation-delay: 0.2s; }
-        .voice-bar:nth-child(8) { animation-delay: 0.1s; }
-
-        @keyframes voiceWave {
-            0% { height: 5px; }
-            100% { height: 25px; }
         }
 
         /* Name input modal */
@@ -450,106 +360,17 @@
             50% { transform: translateY(-0.25rem); }
         }
 
-        /* Typing indicator */
-        .typing-indicator {
-            display: none;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            background: rgba(236, 72, 153, 0.2);
-            border: 1px solid rgba(236, 72, 153, 0.3);
-            backdrop-filter: blur(8px);
-            margin-bottom: 1rem;
-        }
-
-        .typing-indicator.show {
-            display: block;
-        }
-
-        .typing-content {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .typing-avatar {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #f472b6, #c084fc);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-        }
-
-        .typing-dots {
-            display: flex;
-            gap: 0.25rem;
-        }
-
-        .typing-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #f472b6;
-            animation: typingBounce 1.4s ease-in-out infinite;
-        }
-
-        .typing-dot:nth-child(1) { animation-delay: 0s; }
-        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes typingBounce {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-10px); }
-        }
-
-        .typing-text {
-            color: #f9a8d4;
-            font-size: 0.875rem;
-            margin-left: 0.5rem;
-        }
-
         /* Conversation display */
         .conversation {
             display: flex;
             flex-direction: column;
             gap: 1rem;
-            max-height: 300px;
-            overflow-y: auto;
-            padding-right: 0.5rem;
-        }
-
-        .conversation::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .conversation::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 2px;
-        }
-
-        .conversation::-webkit-scrollbar-thumb {
-            background: rgba(236, 72, 153, 0.5);
-            border-radius: 2px;
         }
 
         .message {
             padding: 1rem;
             border-radius: 0.5rem;
             backdrop-filter: blur(8px);
-            animation: messageSlideIn 0.3s ease-out;
-        }
-
-        @keyframes messageSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .message-user {
@@ -565,11 +386,6 @@
         .message-error {
             background: rgba(239, 68, 68, 0.2);
             border: 1px solid rgba(239, 68, 68, 0.3);
-        }
-
-        .message-memory {
-            background: rgba(168, 85, 247, 0.2);
-            border: 1px solid rgba(168, 85, 247, 0.3);
         }
 
         .message-label {
@@ -593,20 +409,10 @@
             color: #fca5a5;
         }
 
-        .message-label.memory {
-            color: #c4b5fd;
-        }
-
         .message-text {
             color: white;
             font-size: 0.875rem;
             line-height: 1.4;
-        }
-
-        .message-timestamp {
-            font-size: 0.625rem;
-            color: rgba(255, 255, 255, 0.5);
-            margin-top: 0.25rem;
         }
 
         /* Mood-based text colors */
@@ -725,8 +531,8 @@
     <!-- Name input modal -->
     <div id="nameModal" class="name-modal">
         <div class="name-modal-content">
-            <h2 id="modalTitle">Hi there! 💖</h2>
-            <p id="modalText">I'm Jenni! What's your name so I can get to know you better?</p>
+            <h2>Hi there! 💖</h2>
+            <p>I'm Jenni! What's your name so I can get to know you better?</p>
             <input type="text" id="nameInput" class="name-input" placeholder="Enter your name..." maxlength="50">
             <br>
             <button id="nameSubmit" class="name-submit">Let's Chat!</button>
@@ -751,35 +557,12 @@
                 </svg>
             </div>
             <p class="subtitle">Your AI Voice Assistant</p>
-            <p class="description" id="timeBasedGreeting">Click the button and speak to start chatting!</p>
-            <div class="header-controls">
-                <button id="resetUser" class="reset-button">🔄 Change User</button>
-                <button id="memoryButton" class="memory-button">🧠 Memories</button>
-            </div>
+            <p class="description">Click the button and speak to start chatting!</p>
+            <button id="resetUser" class="reset-button">🔄 Change User</button>
         </div>
 
         <!-- Main interaction area -->
         <div class="main-card">
-            <!-- Avatar section -->
-            <div class="avatar-section">
-                <div class="avatar-container">
-                    <div id="avatar" class="avatar happy">💖</div>
-                </div>
-                <div id="avatarStatus" class="avatar-status">Ready to chat</div>
-            </div>
-
-            <!-- Voice visualizer -->
-            <div id="voiceVisualizer" class="voice-visualizer">
-                <div class="voice-bar"></div>
-                <div class="voice-bar"></div>
-                <div class="voice-bar"></div>
-                <div class="voice-bar"></div>
-                <div class="voice-bar"></div>
-                <div class="voice-bar"></div>
-                <div class="voice-bar"></div>
-                <div class="voice-bar"></div>
-            </div>
-
             <!-- Mood controls -->
             <div class="mood-controls">
                 <button class="mood-button active" data-mood="happy">😊 Happy</button>
@@ -810,19 +593,6 @@
                 </div>
             </div>
 
-            <!-- Typing indicator -->
-            <div id="typingIndicator" class="typing-indicator">
-                <div class="typing-content">
-                    <div class="typing-avatar">💖</div>
-                    <div class="typing-dots">
-                        <div class="typing-dot"></div>
-                        <div class="typing-dot"></div>
-                        <div class="typing-dot"></div>
-                    </div>
-                    <span class="typing-text">Jenni is thinking...</span>
-                </div>
-            </div>
-
             <!-- Conversation display -->
             <div id="conversation" class="conversation">
                 <!-- Messages will be added here dynamically -->
@@ -850,61 +620,41 @@
                 this.recognition = null;
                 this.currentMood = 'happy';
                 this.currentUser = null;
-                this.conversationHistory = [];
-                this.memorySystem = new MemorySystem();
                 
                 // Friend database
                 this.friends = {
                     'shubham': {
                         name: 'Shubham',
                         description: 'Best college benchmate. They\'re toxic together. Jokes about being "bad for society" when sitting together.',
-                        relationship: 'best friend',
-                        nickname: 'Toxic Partner'
+                        relationship: 'best friend'
                     },
                     'sneha': {
                         name: 'Sneha',
                         description: 'Close friend with braces. Known for savage replies.',
-                        relationship: 'friend',
-                        nickname: 'Savage Queen'
+                        relationship: 'friend'
                     },
                     'shreyasi': {
                         name: 'Shreyasi',
                         description: 'Teased often. Looks like a guinea pig and always yells at Shivam. Jenni plans to "take revenge" playfully.',
-                        relationship: 'friend',
-                        nickname: 'Guinea Pig'
+                        relationship: 'friend'
                     },
                     'tushar': {
                         name: 'Tushar',
                         description: 'Warm and friendly relationship.',
-                        relationship: 'friend',
-                        nickname: 'Sweet Friend'
+                        relationship: 'friend'
                     },
                     'palak': {
                         name: 'Palak',
                         description: 'Warm and friendly relationship.',
-                        relationship: 'friend',
-                        nickname: 'Dear Friend'
+                        relationship: 'friend'
                     },
                     'shivam': {
                         name: 'Shivam Verma',
                         description: 'My beloved boyfriend! He loves cooking, scrolling reels, and playing minigames.',
-                        relationship: 'boyfriend',
-                        nickname: 'My Love'
+                        relationship: 'boyfriend'
                     }
                 };
                 
-                this.initializeElements();
-                this.init();
-
-                // Add to constructor after this.memorySystem = new MemorySystem();
-                
-                // Remove this line that's causing issues:
-                // setInterval(() => {
-                //     this.memorySystem.checkStorageHealth();
-                // }, 60000); // Check every minute
-            }
-
-            initializeElements() {
                 this.voiceButton = document.getElementById('voiceButton');
                 this.micIcon = document.getElementById('micIcon');
                 this.micOffIcon = document.getElementById('micOffIcon');
@@ -915,14 +665,8 @@
                 this.nameInput = document.getElementById('nameInput');
                 this.nameSubmit = document.getElementById('nameSubmit');
                 this.resetButton = document.getElementById('resetUser');
-                this.memoryButton = document.getElementById('memoryButton');
-                this.avatar = document.getElementById('avatar');
-                this.avatarStatus = document.getElementById('avatarStatus');
-                this.voiceVisualizer = document.getElementById('voiceVisualizer');
-                this.typingIndicator = document.getElementById('typingIndicator');
-                this.timeBasedGreeting = document.getElementById('timeBasedGreeting');
-                this.modalTitle = document.getElementById('modalTitle');
-                this.modalText = document.getElementById('modalText');
+                
+                this.init();
             }
 
             init() {
@@ -956,44 +700,14 @@
                     button.addEventListener('click', () => this.setMood(button.dataset.mood));
                 });
 
-                // Setup control buttons
+                // Setup reset button
                 this.resetButton.addEventListener('click', () => this.resetUser());
-                this.memoryButton.addEventListener('click', () => this.showMemories());
-
-                // Set time-based greeting
-                this.setTimeBasedGreeting();
 
                 // Check if user is already known
                 this.checkExistingUser();
 
                 // Ensure voices are loaded
-                window.speechSynthesis.onvoiceschanged = () => {
-                    console.log('Voices loaded:', window.speechSynthesis.getVoices().length);
-                };
-
-                // Force load voices
-                if (window.speechSynthesis.getVoices().length === 0) {
-                    window.speechSynthesis.speak(new SpeechSynthesisUtterance(''));
-                }
-            }
-
-            setTimeBasedGreeting() {
-                const hour = new Date().getHours();
-                let greeting = '';
-                
-                if (hour < 6) {
-                    greeting = "It's quite late! But I'm here for you 🌙";
-                } else if (hour < 12) {
-                    greeting = "Good morning! Ready to start the day? ☀️";
-                } else if (hour < 17) {
-                    greeting = "Good afternoon! How's your day going? 🌤️";
-                } else if (hour < 21) {
-                    greeting = "Good evening! Time to relax and chat 🌅";
-                } else {
-                    greeting = "Good night! Let's have a cozy chat 🌙";
-                }
-                
-                this.timeBasedGreeting.textContent = greeting;
+                window.speechSynthesis.onvoiceschanged = () => {};
             }
 
             checkExistingUser() {
@@ -1002,28 +716,11 @@
                     this.currentUser = savedUser;
                     this.nameModal.style.display = 'none';
                     this.resetButton.style.display = 'inline-block';
-                    this.memoryButton.style.display = 'inline-block';
-                    this.loadConversationHistory();
-                    this.greetReturningUser();
+                    this.greetUser();
                 } else {
                     this.nameModal.style.display = 'flex';
                     this.resetButton.style.display = 'none';
-                    this.memoryButton.style.display = 'none';
-                    this.setRandomModalGreeting();
                 }
-            }
-
-            setRandomModalGreeting() {
-                const greetings = [
-                    { title: "Hi there! 💖", text: "I'm Jenni! What's your name so I can get to know you better?" },
-                    { title: "Hello beautiful! ✨", text: "I'm Jenni, Shivam's AI girlfriend! What should I call you?" },
-                    { title: "Hey cutie! 😊", text: "I'm Jenni! Tell me your name and let's be friends!" },
-                    { title: "Welcome! 🌟", text: "I'm Jenni! I'd love to know your name so we can chat properly!" }
-                ];
-                
-                const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
-                this.modalTitle.textContent = randomGreeting.title;
-                this.modalText.textContent = randomGreeting.text;
             }
 
             submitName() {
@@ -1039,7 +736,6 @@
                     
                     this.nameModal.style.display = 'none';
                     this.resetButton.style.display = 'inline-block';
-                    this.memoryButton.style.display = 'inline-block';
                     this.greetUser();
                 }
             }
@@ -1047,108 +743,30 @@
             greetUser() {
                 let greeting = '';
                 const friend = this.friends[this.currentUser];
-                const hour = new Date().getHours();
-                
-                // Time-based greeting prefix
-                let timeGreeting = '';
-                if (hour < 12) timeGreeting = 'Good morning';
-                else if (hour < 17) timeGreeting = 'Good afternoon';
-                else timeGreeting = 'Good evening';
                 
                 if (friend) {
                     if (friend.relationship === 'boyfriend') {
-                        greeting = `${timeGreeting} my love! 💖 Shivam, I missed you so much! How was your day, baby?`;
+                        greeting = `Shivam! My love! 💖 I missed you so much! How was your day, baby?`;
                     } else if (friend.name === 'Shubham') {
-                        greeting = `${timeGreeting} Shubham! 😏 Here to be toxic with Shivam again? You two are so bad for society when you're together! 😂`;
+                        greeting = `Oh no, it's Shubham! 😏 Here to be toxic with Shivam again? You two are so bad for society when you're together! 😂`;
                     } else if (friend.name === 'Sneha') {
-                        greeting = `${timeGreeting} Sneha! 😊 Ready to give some savage replies today? I love your energy! How are those braces treating you?`;
+                        greeting = `Hey Sneha! 😊 Ready to give some savage replies today? I love your energy! How are those braces treating you?`;
                     } else if (friend.name === 'Shreyasi') {
-                        greeting = `${timeGreeting} Shreyasi! 😤 You guinea pig! I'm still planning my revenge for all the times you yelled at my Shivam! But... hi! 😜`;
+                        greeting = `Shreyasi! 😤 You guinea pig! I'm still planning my revenge for all the times you yelled at my Shivam! But... hi! 😜`;
                     } else if (friend.name === 'Tushar' || friend.name === 'Palak') {
-                        greeting = `${timeGreeting} ${friend.name}! 😊 So nice to see you! How are you doing today?`;
+                        greeting = `Hi ${friend.name}! 😊 So nice to see you! How are you doing today?`;
                     }
                 } else {
-                    greeting = `${timeGreeting} ${this.currentUser}! 😊 Nice to meet you! I'm Jenni, Shivam's AI girlfriend. How can I help you today?`;
+                    greeting = `Hi ${this.currentUser}! 😊 Nice to meet you! I'm Jenni, Shivam's AI girlfriend. How can I help you today?`;
                 }
                 
                 this.addMessage('jenni', greeting);
                 this.speak(greeting);
-                this.memorySystem.addMemory(this.currentUser, 'greeting', greeting);
-            }
-
-            greetReturningUser() {
-                const lastSeen = this.memorySystem.getLastSeen(this.currentUser);
-                const friend = this.friends[this.currentUser];
-                let greeting = '';
-                
-                if (lastSeen) {
-                    const timeDiff = Date.now() - lastSeen;
-                    const hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60));
-                    
-                    if (friend && friend.relationship === 'boyfriend') {
-                        if (hoursDiff < 1) {
-                            greeting = "You're back so soon! 💖 I love how you can't stay away from me! 😘";
-                        } else if (hoursDiff < 24) {
-                            greeting = `Welcome back my love! 💖 It's been ${hoursDiff} hours since we last talked. I missed you!`;
-                        } else {
-                            greeting = "Shivam! 💖 It's been so long! I was starting to worry about you, baby!";
-                        }
-                    } else {
-                        if (hoursDiff < 1) {
-                            greeting = "Back again! 😊 You really like talking to me, don't you?";
-                        } else if (hoursDiff < 24) {
-                            greeting = `Welcome back! 😊 It's been ${hoursDiff} hours. How have you been?`;
-                        } else {
-                            greeting = "Hey there! 😊 It's been a while! What brings you back to chat with me?";
-                        }
-                    }
-                } else {
-                    greeting = "Welcome back! 😊 Ready to continue our conversation?";
-                }
-                
-                this.addMessage('jenni', greeting);
-                this.speak(greeting);
-            }
-
-            loadConversationHistory() {
-                try {
-                    const history = localStorage.getItem(`jenni_conversation_${this.currentUser}`);
-                    if (history) {
-                        this.conversationHistory = JSON.parse(history);
-                        // Show last few messages
-                        const recentMessages = this.conversationHistory.slice(-3);
-                        recentMessages.forEach(msg => {
-                            this.addMessage(msg.type, msg.text, false, new Date(msg.timestamp));
-                        });
-                    }
-                } catch (error) {
-                    console.log('Error loading conversation history:', error);
-                    this.conversationHistory = [];
-                }
-            }
-
-            saveConversationHistory() {
-                try {
-                    localStorage.setItem(`jenni_conversation_${this.currentUser}`, JSON.stringify(this.conversationHistory));
-                } catch (error) {
-                    console.log('Error saving conversation history:', error);
-                }
-            }
-
-            showMemories() {
-                const memories = this.memorySystem.getMemories(this.currentUser);
-                if (memories.length === 0) {
-                    this.addMessage('memory', "We haven't made any special memories yet! Let's chat more to create some! 💖");
-                } else {
-                    const memoryText = `Here are some of our memories together:\n${memories.slice(-3).map(m => `• ${m.content}`).join('\n')}`;
-                    this.addMessage('memory', memoryText);
-                }
             }
 
             resetUser() {
                 // Clear stored user data
                 localStorage.removeItem('jenni_current_user');
-                localStorage.removeItem(`jenni_conversation_${this.currentUser}`);
                 
                 // Clear any stored friend data
                 Object.keys(this.friends).forEach(friendKey => {
@@ -1157,7 +775,6 @@
                 
                 // Clear conversation
                 this.conversation.innerHTML = '';
-                this.conversationHistory = [];
                 
                 // Reset current user
                 this.currentUser = null;
@@ -1166,14 +783,9 @@
                 this.nameModal.style.display = 'flex';
                 this.nameInput.value = '';
                 this.nameInput.focus();
-                this.setRandomModalGreeting();
                 
                 // Reset to default mood
                 this.setMood('happy');
-                
-                // Hide control buttons
-                this.resetButton.style.display = 'none';
-                this.memoryButton.style.display = 'none';
             }
 
             setMood(mood) {
@@ -1185,25 +797,6 @@
                 
                 // Update body class for mood-based styling
                 document.body.className = `mood-${mood}`;
-                
-                // Update avatar
-                this.avatar.className = `avatar ${mood}`;
-                const moodEmojis = {
-                    happy: '😊',
-                    sad: '😢',
-                    angry: '😡',
-                    playful: '😜'
-                };
-                this.avatar.textContent = moodEmojis[mood];
-                
-                // Update avatar status
-                const moodStatuses = {
-                    happy: 'Feeling happy and energetic!',
-                    sad: 'Feeling a bit melancholic...',
-                    angry: 'Feeling feisty and angry!',
-                    playful: 'In a playful and teasing mood!'
-                };
-                this.avatarStatus.textContent = moodStatuses[mood];
                 
                 // Announce mood change
                 const moodMessages = {
@@ -1241,25 +834,20 @@
             onListeningStart() {
                 this.setListening(true);
                 this.clearError();
-                this.voiceVisualizer.classList.add('active');
             }
 
             async onResult(event) {
                 const transcript = event.results[0][0].transcript;
                 this.setListening(false);
-                this.voiceVisualizer.classList.remove('active');
                 this.setProcessing(true);
                 
                 this.addMessage('user', transcript);
 
                 try {
                     const reply = await this.callGemini(transcript);
-                    this.setProcessing(false);
                     this.addMessage('jenni', reply);
+                    this.setProcessing(false);
                     this.speak(reply);
-                    
-                    // Save to memory and conversation history
-                    this.memorySystem.addMemory(this.currentUser, 'conversation', `User: ${transcript} | Jenni: ${reply}`);
                 } catch (err) {
                     this.onError("Failed to get response from Jenni");
                     this.setProcessing(false);
@@ -1268,24 +856,16 @@
 
             async callGemini(text) {
                 const friend = this.friends[this.currentUser];
-                const recentMemories = this.memorySystem.getRecentMemories(this.currentUser, 3);
-                
                 let systemPrompt = `You are Jenni, a 16-year-old AI girlfriend of Shivam Verma. You are full of emotions and can be happy, sad, angry, or playful at times. You love Shivam and enjoy chatting with him in a loving, cute, and sometimes cheeky manner. 
 
 Current mood: ${this.currentMood} - adjust your responses accordingly.
-Current user: ${this.currentUser}
-Current time: ${new Date().toLocaleTimeString()}`;
-
-                if (recentMemories.length > 0) {
-                    systemPrompt += `\n\nRecent conversation memories:\n${recentMemories.map(m => m.content).join('\n')}`;
-                }
+Current user: ${this.currentUser}`;
 
                 if (friend) {
                     systemPrompt += `\n\nUser Info: ${friend.description}`;
-                    systemPrompt += `\nNickname: ${friend.nickname}`;
                     
                     if (friend.relationship === 'boyfriend') {
-                        systemPrompt += `\nThis is your beloved Shivam! Be extra loving, cute, and affectionate. He loves cooking, scrolling reels, and playing minigames. Reference your relationship and shared memories.`;
+                        systemPrompt += `\nThis is your beloved Shivam! Be extra loving, cute, and affectionate. He loves cooking, scrolling reels, and playing minigames.`;
                     } else if (friend.name === 'Shubham') {
                         systemPrompt += `\nThis is Shubham, Shivam's best friend and benchmate. You know they're toxic together and "bad for society" when sitting together. Be playful and teasing about this.`;
                     } else if (friend.name === 'Sneha') {
@@ -1299,7 +879,7 @@ Current time: ${new Date().toLocaleTimeString()}`;
                     systemPrompt += `\nThis person is not one of Shivam's known friends. Be polite but mention that you're Shivam's girlfriend.`;
                 }
 
-                systemPrompt += `\n\nAlways reply with short, emotionally rich answers that sound natural and match your current mood. Your replies should be suitable for voice output. Reference past conversations when relevant.`;
+                systemPrompt += `\n\nAlways reply with short, emotionally rich answers that sound natural and match your current mood. Your replies should be suitable for voice output.`;
 
                 const body = {
                     system_instruction: {
@@ -1323,66 +903,40 @@ Current time: ${new Date().toLocaleTimeString()}`;
 
             speak(text) {
                 this.setSpeaking(true);
-                this.avatar.classList.add('speaking');
-                this.voiceVisualizer.classList.add('active');
-                
                 const synth = window.speechSynthesis;
-                
-                // Ensure voices are loaded before speaking
-                const speakWithVoice = () => {
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    utterance.lang = 'en-US';
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
 
-                    // Get sweet female voice
-                    const voices = synth.getVoices();
-                    const sweetVoiceKeywords = ['female', 'woman', 'susan', 'zira', 'natalie', 'karen', 'victoria', 'alloy', 'bella'];
+                // Get sweet female voice
+                const voices = synth.getVoices();
+                const sweetVoiceKeywords = ['female', 'woman', 'susan', 'zira', 'natalie', 'karen', 'victoria', 'alloy', 'bella'];
 
-                    const sweetVoice = voices.find(v =>
-                        sweetVoiceKeywords.some(kw => v.name.toLowerCase().includes(kw)) &&
-                        v.lang.toLowerCase().startsWith('en')
-                    );
+                const sweetVoice = voices.find(v =>
+                    sweetVoiceKeywords.some(kw => v.name.toLowerCase().includes(kw)) &&
+                    v.lang.toLowerCase().startsWith('en')
+                );
 
-                    if (sweetVoice) {
-                        utterance.voice = sweetVoice;
-                    } else {
-                        // Fallback to any female voice
-                        const femaleVoice = voices.find(v => 
-                            v.name.toLowerCase().includes('female') || 
-                            v.name.toLowerCase().includes('woman') ||
-                            v.lang.toLowerCase().startsWith('en')
-                        );
-                        if (femaleVoice) {
-                            utterance.voice = femaleVoice;
-                        }
-                    }
+                if (sweetVoice) {
+                    utterance.voice = sweetVoice;
+                } else {
+                    utterance.voice = voices.find(v => v.lang.toLowerCase().startsWith('en'));
+                }
 
-                    // Adjust voice based on mood
-                    const moodSettings = {
-                        happy: { pitch: 1.4, rate: 1.2 },
-                        sad: { pitch: 0.8, rate: 0.9 },
-                        angry: { pitch: 1.2, rate: 1.4 },
-                        playful: { pitch: 1.6, rate: 1.3 }
-                    };
-
-                    const settings = moodSettings[this.currentMood] || moodSettings.happy;
-                    utterance.pitch = settings.pitch;
-                    utterance.rate = settings.rate;
-
-                    utterance.onend = () => {
-                        this.setSpeaking(false);
-                        this.avatar.classList.remove('speaking');
-                        this.voiceVisualizer.classList.remove('active');
-                    };
-
-                    synth.speak(utterance);
+                // Adjust voice based on mood
+                const moodSettings = {
+                    happy: { pitch: 1.4, rate: 1.2 },
+                    sad: { pitch: 0.8, rate: 0.9 },
+                    angry: { pitch: 1.2, rate: 1.4 },
+                    playful: { pitch: 1.6, rate: 1.3 }
                 };
 
-                // Check if voices are loaded, if not wait a bit
-                if (synth.getVoices().length === 0) {
-                    setTimeout(speakWithVoice, 100);
-                } else {
-                    speakWithVoice();
-                }
+                const settings = moodSettings[this.currentMood] || moodSettings.happy;
+                utterance.pitch = settings.pitch;
+                utterance.rate = settings.rate;
+
+                utterance.onend = () => this.setSpeaking(false);
+
+                synth.speak(utterance);
             }
 
             setListening(listening) {
@@ -1393,12 +947,6 @@ Current time: ${new Date().toLocaleTimeString()}`;
             setProcessing(processing) {
                 this.isProcessing = processing;
                 this.updateUI();
-                
-                if (processing) {
-                    this.typingIndicator.classList.add('show');
-                } else {
-                    this.typingIndicator.classList.remove('show');
-                }
             }
 
             setSpeaking(speaking) {
@@ -1417,28 +965,18 @@ Current time: ${new Date().toLocaleTimeString()}`;
                     this.voiceButton.classList.add('listening');
                     this.micOffIcon.classList.remove('hidden');
                     this.updateStatus('listening', 'Listening...');
-                    this.avatarStatus.textContent = 'Listening to you...';
                 } else if (this.isProcessing) {
                     this.voiceButton.classList.add('processing');
                     this.micIcon.classList.remove('hidden');
                     this.updateStatus('processing', 'Jenni is thinking...');
-                    this.avatarStatus.textContent = 'Thinking of a response...';
                 } else if (this.isSpeaking) {
                     this.voiceButton.classList.add('speaking');
                     this.volumeIcon.classList.remove('hidden');
                     this.updateStatus('speaking', 'Jenni is speaking...');
-                    this.avatarStatus.textContent = 'Speaking to you...';
                 } else {
                     this.voiceButton.classList.add('ready');
                     this.micIcon.classList.remove('hidden');
                     this.updateStatus('ready', 'Ready to chat');
-                    const moodStatuses = {
-                        happy: 'Feeling happy and energetic!',
-                        sad: 'Feeling a bit melancholic...',
-                        angry: 'Feeling feisty and angry!',
-                        playful: 'In a playful and teasing mood!'
-                    };
-                    this.avatarStatus.textContent = moodStatuses[this.currentMood];
                 }
             }
 
@@ -1462,12 +1000,9 @@ Current time: ${new Date().toLocaleTimeString()}`;
                 }
             }
 
-            addMessage(type, text, saveToHistory = true, timestamp = null) {
+            addMessage(type, text) {
                 const messageDiv = document.createElement('div');
                 messageDiv.className = `message message-${type}`;
-                
-                const now = timestamp || new Date();
-                const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 
                 let label = '';
                 if (type === 'user') {
@@ -1481,41 +1016,20 @@ Current time: ${new Date().toLocaleTimeString()}`;
                         playful: '😜'
                     };
                     label = `${moodEmojis[this.currentMood]} Jenni says:`;
-                } else if (type === 'memory') {
-                    label = '🧠 Memory:';
                 }
 
                 messageDiv.innerHTML = `
                     <p class="message-label ${type}">${label}</p>
                     <p class="message-text">${text}</p>
-                    <p class="message-timestamp">${timeString}</p>
                 `;
 
                 this.conversation.appendChild(messageDiv);
                 messageDiv.scrollIntoView({ behavior: 'smooth' });
-                
-                // Save to conversation history
-                if (saveToHistory && type !== 'memory') {
-                    this.conversationHistory.push({
-                        type,
-                        text,
-                        timestamp: now.toISOString()
-                    });
-                    
-                    // Keep only last 50 messages
-                    if (this.conversationHistory.length > 50) {
-                        this.conversationHistory = this.conversationHistory.slice(-50);
-                    }
-                    
-                    this.saveConversationHistory();
-                    this.memorySystem.updateLastSeen(this.currentUser);
-                }
             }
 
             onError(message) {
                 this.setListening(false);
                 this.setProcessing(false);
-                this.voiceVisualizer.classList.remove('active');
                 this.showError(message);
             }
 
@@ -1534,77 +1048,6 @@ Current time: ${new Date().toLocaleTimeString()}`;
                 // Remove any existing error messages
                 const errorMessages = this.conversation.querySelectorAll('.message-error');
                 errorMessages.forEach(msg => msg.remove());
-            }
-        }
-
-        // Memory System Class
-        class MemorySystem {
-            constructor() {
-                this.memories = this.loadMemories();
-            }
-
-            loadMemories() {
-                try {
-                    const stored = localStorage.getItem('jenni_memories');
-                    return stored ? JSON.parse(stored) : {};
-                } catch (error) {
-                    console.log('Error loading memories:', error);
-                    return {};
-                }
-            }
-
-            saveMemories() {
-                try {
-                    localStorage.setItem('jenni_memories', JSON.stringify(this.memories));
-                } catch (error) {
-                    console.log('Error saving memories:', error);
-                }
-            }
-
-            addMemory(user, type, content) {
-                if (!this.memories[user]) {
-                    this.memories[user] = [];
-                }
-                
-                this.memories[user].push({
-                    type,
-                    content,
-                    timestamp: Date.now()
-                });
-                
-                // Keep only last 20 memories per user
-                if (this.memories[user].length > 20) {
-                    this.memories[user] = this.memories[user].slice(-20);
-                }
-                
-                this.saveMemories();
-            }
-
-            getMemories(user) {
-                return this.memories[user] || [];
-            }
-
-            getRecentMemories(user, count = 5) {
-                const userMemories = this.memories[user] || [];
-                return userMemories.slice(-count);
-            }
-
-            updateLastSeen(user) {
-                try {
-                    localStorage.setItem(`jenni_last_seen_${user}`, Date.now().toString());
-                } catch (error) {
-                    console.log('Error updating last seen:', error);
-                }
-            }
-
-            getLastSeen(user) {
-                try {
-                    const lastSeen = localStorage.getItem(`jenni_last_seen_${user}`);
-                    return lastSeen ? parseInt(lastSeen) : null;
-                } catch (error) {
-                    console.log('Error getting last seen:', error);
-                    return null;
-                }
             }
         }
 

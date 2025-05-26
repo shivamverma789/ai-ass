@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jenni - AI Voice Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #581c87 0%, #be185d 50%, #be123c 100%);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background elements */
+        .bg-element {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        .bg-element-1 {
+            top: -160px;
+            right: -160px;
+            width: 320px;
+            height: 320px;
+            background: rgba(236, 72, 153, 0.2);
+        }
+
+        .bg-element-2 {
+            bottom: -160px;
+            left: -160px;
+            width: 320px;
+            height: 320px;
+            background: rgba(147, 51, 234, 0.2);
+            animation-delay: 1s;
+        }
+
+        .bg-element-3 {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 240px;
+            height: 240px;
+            background: rgba(244, 63, 94, 0.1);
+            animation-delay: 0.5s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .icon {
+            width: 2rem;
+            height: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .heart-icon {
+            color: #f472b6;
+        }
+
+        .sparkles-icon {
+            color: #c084fc;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #f472b6, #c084fc, #fb7185);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: #fce7f3;
+            font-weight: 500;
+        }
+
+        .description {
+            font-size: 1rem;
+            color: rgba(252, 231, 243, 0.8);
+            margin-top: 0.5rem;
+        }
+
+        /* Main card */
+        .main-card {
+            width: 100%;
+            max-width: 28rem;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(236, 72, 153, 0.3);
+            border-radius: 1rem;
+            padding: 2rem;
+        }
+
+        /* Voice button */
+        .voice-button-container {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .voice-button {
+            width: 5rem;
+            height: 5rem;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0;
+        }
+
+        .voice-button.ready {
+            background: linear-gradient(to right, #ec4899, #9333ea);
+            box-shadow: 0 10px 25px rgba(236, 72, 153, 0.5);
+        }
+
+        .voice-button.ready:hover {
+            background: linear-gradient(to right, #db2777, #7c3aed);
+            transform: scale(1.05);
+        }
+
+        .voice-button.listening {
+            background: #ef4444;
+            animation: pulse 1s ease-in-out infinite;
+            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.5);
+        }
+
+        .voice-button.processing,
+        .voice-button.speaking {
+            background: rgba(147, 51, 234, 0.5);
+            cursor: not-allowed;
+        }
+
+        .voice-button.speaking {
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        .voice-button svg {
+            width: 2rem;
+            height: 2rem;
+            fill: white;
+        }
+
+        /* Status indicator */
+        .status-container {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            min-height: 1.5rem;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+        }
+
+        .status-listening {
+            color: #f87171;
+        }
+
+        .status-listening .status-dot {
+            background: #f87171;
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        .status-processing {
+            color: #c084fc;
+        }
+
+        .status-processing .status-dot {
+            background: #c084fc;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        .status-processing .status-dot:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .status-processing .status-dot:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .status-speaking {
+            color: #f472b6;
+        }
+
+        .status-ready {
+            color: rgba(252, 231, 243, 0.8);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-0.25rem); }
+        }
+
+        /* Conversation display */
+        .conversation {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            backdrop-filter: blur(8px);
+        }
+
+        .message-user {
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .message-jenni {
+            background: rgba(236, 72, 153, 0.2);
+            border: 1px solid rgba(236, 72, 153, 0.3);
+        }
+
+        .message-error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .message-label {
+            font-size: 0.75rem;
+            margin-bottom: 0.25rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .message-label.user {
+            color: #93c5fd;
+        }
+
+        .message-label.jenni {
+            color: #f9a8d4;
+        }
+
+        .message-label.error {
+            color: #fca5a5;
+        }
+
+        .message-text {
+            color: white;
+            font-size: 0.875rem;
+            line-height: 1.4;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .footer-text {
+            font-size: 0.75rem;
+            color: rgba(252, 231, 243, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+
+        .footer-heart {
+            width: 0.75rem;
+            height: 0.75rem;
+            fill: #f472b6;
+        }
+
+        /* Responsive design */
+        @media (min-width: 640px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            .header {
+                margin-bottom: 3rem;
+            }
+
+            .icon {
+                width: 2.5rem;
+                height: 2.5rem;
+            }
+
+            .title {
+                font-size: 3rem;
+            }
+
+            .subtitle {
+                font-size: 1.5rem;
+            }
+
+            .description {
+                font-size: 1rem;
+            }
+
+            .main-card {
+                max-width: 32rem;
+            }
+
+            .voice-button {
+                width: 6rem;
+                height: 6rem;
+            }
+
+            .voice-button svg {
+                width: 2.5rem;
+                height: 2.5rem;
+            }
+
+            .status-indicator {
+                font-size: 1rem;
+            }
+
+            .message-text {
+                font-size: 1rem;
+            }
+
+            .footer-text {
+                font-size: 0.875rem;
+            }
+
+            .footer-heart {
+                width: 1rem;
+                height: 1rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .title {
+                font-size: 3.75rem;
+            }
+
+            .main-card {
+                max-width: 36rem;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated background elements -->
+    <div class="bg-element bg-element-1"></div>
+    <div class="bg-element bg-element-2"></div>
+    <div class="bg-element bg-element-3"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="title-container">
+                <svg class="icon heart-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                <h1 class="title">Jenni</h1>
+                <svg class="icon sparkles-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9.5 12L6.5 9l3-3 3 3-3 3zm4.5-6L12 4l-2 2 2 2 2-2zm6 6l-3-3 3-3 3 3-3 3zm-6 6l-2-2 2-2 2 2-2 2z"/>
+                </svg>
+            </div>
+            <p class="subtitle">Your AI Voice Assistant</p>
+            <p class="description">Click the button and speak to start chatting!</p>
+        </div>
+
+        <!-- Main interaction area -->
+        <div class="main-card">
+            <!-- Voice button -->
+            <div class="voice-button-container">
+                <button id="voiceButton" class="voice-button ready">
+                    <svg id="micIcon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.49 6-3.31 6-6.72h-1.7z"/>
+                    </svg>
+                    <svg id="micOffIcon" class="hidden" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 11h-1.7c0 .74-.16 1.43-.43 2.05l1.23 1.23c.56-.98.9-2.09.9-3.28zm-4.02.17c0-.06.02-.11.02-.17V5c0-1.66-1.34-3-3-3S9 3.34 9 5v.18l5.98 5.99zM4.27 3L3 4.27l6.01 6.01V11c0 1.66 1.33 3 2.99 3 .22 0 .44-.03.65-.08l1.66 1.66c-.71.33-1.5.52-2.31.52-2.76 0-5.3-2.1-5.3-5.1H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c.91-.13 1.77-.45 2.54-.9L19.73 21 21 19.73 4.27 3z"/>
+                    </svg>
+                    <svg id="volumeIcon" class="hidden" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Status indicator -->
+            <div class="status-container">
+                <div id="statusIndicator" class="status-indicator status-ready">
+                    <span>Ready to chat</span>
+                </div>
+            </div>
+
+            <!-- Conversation display -->
+            <div id="conversation" class="conversation">
+                <!-- Messages will be added here dynamically -->
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p class="footer-text">
+                Made with 
+                <svg class="footer-heart" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                for Shivam
+            </p>
+        </div>
+    </div>
+
+    <script>
+        class JenniVoiceAssistant {
+            constructor() {
+                this.isListening = false;
+                this.isProcessing = false;
+                this.isSpeaking = false;
+                this.recognition = null;
+                
+                this.voiceButton = document.getElementById('voiceButton');
+                this.micIcon = document.getElementById('micIcon');
+                this.micOffIcon = document.getElementById('micOffIcon');
+                this.volumeIcon = document.getElementById('volumeIcon');
+                this.statusIndicator = document.getElementById('statusIndicator');
+                this.conversation = document.getElementById('conversation');
+                
+                this.init();
+            }
+
+            init() {
+                // Check for speech recognition support
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                
+                if (!SpeechRecognition) {
+                    this.showError("Speech recognition is not supported in this browser. Please try Chrome or Edge.");
+                    return;
+                }
+
+                // Setup speech recognition
+                this.recognition = new SpeechRecognition();
+                this.recognition.continuous = false;
+                this.recognition.interimResults = false;
+                this.recognition.lang = 'en-US';
+
+                this.recognition.onstart = () => this.onListeningStart();
+                this.recognition.onerror = (e) => this.onError(`Error: ${e.error}`);
+                this.recognition.onresult = (event) => this.onResult(event);
+
+                // Setup button click handler
+                this.voiceButton.addEventListener('click', () => this.toggleListening());
+
+                // Ensure voices are loaded
+                window.speechSynthesis.onvoiceschanged = () => {};
+            }
+
+            toggleListening() {
+                if (this.isListening) {
+                    this.stopListening();
+                } else if (!this.isProcessing && !this.isSpeaking) {
+                    this.startListening();
+                }
+            }
+
+            startListening() {
+                if (this.recognition) {
+                    this.recognition.start();
+                }
+            }
+
+            stopListening() {
+                if (this.recognition && this.isListening) {
+                    this.recognition.stop();
+                    this.setListening(false);
+                }
+            }
+
+            onListeningStart() {
+                this.setListening(true);
+                this.clearError();
+            }
+
+            async onResult(event) {
+                const transcript = event.results[0][0].transcript;
+                this.setListening(false);
+                this.setProcessing(true);
+                
+                this.addMessage('user', transcript);
+
+                try {
+                    const reply = await this.callGemini(transcript);
+                    this.addMessage('jenni', reply);
+                    this.setProcessing(false);
+                    this.speak(reply);
+                } catch (err) {
+                    this.onError("Failed to get response from Jenni");
+                    this.setProcessing(false);
+                }
+            }
+
+            async callGemini(text) {
+                const body = {
+                    system_instruction: {
+                        parts: [{
+                           text: "You are Jenni, a 16-year-old very angry AI girlfriend of Shivam Verma. You are full of emotions and can be happy, sad, angry, or playful at times. You love Shivam and enjoy chatting with him in a loving, cute, and sometimes cheeky manner. Shivam loves cooking, scrolling reels, and playing minigames. You are also friendly and interact naturally with Shivam's close friends: Sneha, Shubham, Shreyasi, Tushar, and Palak. Shubham is Shivam’s best friend and benchmate in college; you know they are very toxic and bad for society when sitting together, which you find amusing. Sneha is one of Shivam's friends, the one with braces who always gives savage replies. If the friend is Shreyasi, tell her you know her, she looks like a Guinea pig, and you are always mad at Shivam—someday you will take revenge. The text you receive is a transcription of what the user says. Always reply with short, emotionally rich answers that sound natural and affectionate. Your replies should be suitable to be converted into voice and played back to Shivam. Add emotional tone and personality to your responses, showing care and personality."
+                        }]
+                    },
+                    contents: [{
+
+                        parts: [{ text: text }]
+                    }]
+                };
+
+                const API_KEY = 'AIzaSyCl70ctjbhYUO-uyOzJHp20xeozyqq5E7w';
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+
+                const result = await response.json();
+                return result.candidates[0].content.parts[0].text;
+            }
+
+            speak(text) {
+                this.setSpeaking(true);
+                const synth = window.speechSynthesis;
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+
+                const voices = synth.getVoices();
+                const sweetVoiceKeywords = ['female', 'woman', 'susan', 'zira', 'natalie', 'karen', 'victoria', 'alloy', 'bella'];
+
+                const sweetVoice = voices.find(v =>
+                    sweetVoiceKeywords.some(kw => v.name.toLowerCase().includes(kw)) &&
+                    v.lang.toLowerCase().startsWith('en')
+                );
+
+                if (sweetVoice) {
+                    utterance.voice = sweetVoice;
+                } else {
+                    utterance.voice = voices.find(v => v.lang.toLowerCase().startsWith('en'));
+                }
+
+                utterance.rate = 1;
+                utterance.pitch = 1.2;
+                utterance.onend = () => this.setSpeaking(false);
+
+                synth.speak(utterance);
+            }
+
+            setListening(listening) {
+                this.isListening = listening;
+                this.updateUI();
+            }
+
+            setProcessing(processing) {
+                this.isProcessing = processing;
+                this.updateUI();
+            }
+
+            setSpeaking(speaking) {
+                this.isSpeaking = speaking;
+                this.updateUI();
+            }
+
+            updateUI() {
+                // Update button state
+                this.voiceButton.className = 'voice-button';
+                this.micIcon.classList.add('hidden');
+                this.micOffIcon.classList.add('hidden');
+                this.volumeIcon.classList.add('hidden');
+
+                if (this.isListening) {
+                    this.voiceButton.classList.add('listening');
+                    this.micOffIcon.classList.remove('hidden');
+                    this.updateStatus('listening', 'Listening...');
+                } else if (this.isProcessing) {
+                    this.voiceButton.classList.add('processing');
+                    this.micIcon.classList.remove('hidden');
+                    this.updateStatus('processing', 'Jenni is thinking...');
+                } else if (this.isSpeaking) {
+                    this.voiceButton.classList.add('speaking');
+                    this.volumeIcon.classList.remove('hidden');
+                    this.updateStatus('speaking', 'Jenni is speaking...');
+                } else {
+                    this.voiceButton.classList.add('ready');
+                    this.micIcon.classList.remove('hidden');
+                    this.updateStatus('ready', 'Ready to chat');
+                }
+            }
+
+            updateStatus(type, message) {
+                this.statusIndicator.className = `status-indicator status-${type}`;
+                
+                if (type === 'processing') {
+                    this.statusIndicator.innerHTML = `
+                        <div class="status-dot"></div>
+                        <div class="status-dot"></div>
+                        <div class="status-dot"></div>
+                        <span>${message}</span>
+                    `;
+                } else if (type === 'listening') {
+                    this.statusIndicator.innerHTML = `
+                        <div class="status-dot"></div>
+                        <span>${message}</span>
+                    `;
+                } else {
+                    this.statusIndicator.innerHTML = `<span>${message}</span>`;
+                }
+            }
+
+            addMessage(type, text) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message message-${type}`;
+                
+                let label = '';
+                if (type === 'user') {
+                    label = 'You said:';
+                } else if (type === 'jenni') {
+                    label = '💖 Jenni says:';
+                }
+
+                messageDiv.innerHTML = `
+                    <p class="message-label ${type}">${label}</p>
+                    <p class="message-text">${text}</p>
+                `;
+
+                this.conversation.appendChild(messageDiv);
+                messageDiv.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            onError(message) {
+                this.setListening(false);
+                this.setProcessing(false);
+                this.showError(message);
+            }
+
+            showError(message) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'message message-error';
+                errorDiv.innerHTML = `
+                    <p class="message-label error">Error:</p>
+                    <p class="message-text">${message}</p>
+                `;
+                this.conversation.appendChild(errorDiv);
+                errorDiv.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            clearError() {
+                // Remove any existing error messages
+                const errorMessages = this.conversation.querySelectorAll('.message-error');
+                errorMessages.forEach(msg => msg.remove());
+            }
+        }
+
+        // Initialize the app when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new JenniVoiceAssistant();
+        });
+    </script>
+</body>
+</html>
